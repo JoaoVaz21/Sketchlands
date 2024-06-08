@@ -73,11 +73,10 @@ using UnityEngine.Serialization;
             HandleJump();
             HandleDirection();
             HandleGravity();
-
             _rb.velocity = _velocity;
-        }
+    }
 
-        private void CheckCollisions()
+    private void CheckCollisions()
         {
             Physics2D.queriesStartInColliders = false;
 
@@ -146,6 +145,10 @@ using UnityEngine.Serialization;
             else
             {
 
+                if(_direction.x*this.transform.localScale.x < 0)
+                {
+                    _velocity.x = -_velocity.x;
+                }
                 _velocity.x = Mathf.MoveTowards(_velocity.x, _direction.x * maxSpeed, acceleration * Time.fixedDeltaTime);
             }
             if (_direction.x != 0)

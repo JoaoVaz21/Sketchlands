@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ namespace Player
 {
     public class InkManager : MonoBehaviour
     {
-        [SerializeField] private float minDistance = 0.1f;
+        [SerializeField] private float minDistance = 0.05f;
         [SerializeField] private float lineThickness = 0.1f;
         [SerializeField] private GameObject drawableObject; 
         [SerializeField] private int maxInk = 100;
@@ -17,7 +18,7 @@ namespace Player
         [SerializeField] private LayerMask drainLayer;
         [SerializeField] private SpriteRenderer penRenderer;
         [SerializeField] private SpriteRenderer drainLimitRenderer;
-        [SerializeField] private int distancePerInk =6;
+        [SerializeField] private float distancePerInk =2;
         private Mesh _mesh;
         private DrawableObject _currentDrawing;
         private Vector3 _lastMousePosition;
@@ -42,6 +43,7 @@ namespace Player
         private void Awake()
         {
             this._currentInk = maxInk;
+            StartCoroutine(RefreshInk());
         }
 
         private void FixedUpdate()
@@ -50,16 +52,31 @@ namespace Player
             UpdateDrain();
         }
 
+        private IEnumerator RefreshInk()
+        {
+            while (true)
+            {
+                if (_currentInk < maxInk && !_drawing)
+                {
+                    CurrentInk++;
+                }
+                yield return new WaitForSeconds(0.02f);
+
+
+            }
+        }
+
         #region Draw forms
 
-        
+
         private void OnDrawingCollision()
         {
             _drawing = false;
             //TODO animate drawing failed
             _currentDrawing.CollidedWhileCreating-=OnDrawingCollision;
-            CurrentInk += _currentDrawing.InkUsed;
-            Destroy(_currentDrawing.gameObject);
+            _currentDrawing.CompleteMesh();
+
+
 
         }
         
@@ -153,7 +170,6 @@ namespace Player
     public void Drain(InputAction.CallbackContext callbackContext)
     {
 
-        if (CurrentInk >= maxInk) return;
         if (callbackContext.performed)
         {
             _draining = true;
@@ -164,16 +180,7 @@ namespace Player
             Debug.Log("position to ink from: " + transform.position);
             if (_currentDrainingHit.collider != null)
             {
-               
-                    if (_currentDrainingHit.collider.gameObject.TryGetComponent<DrawableObject>(
-                            out var drainedDrawableObject))
-                    {
-                        CurrentInk += drainedDrawableObject.InkUsed;
-                    }
-
-                    Destroy(_currentDrainingHit.collider.gameObject);
-                
-
+                Destroy(_currentDrainingHit.collider.gameObject);
             }
             penRenderer.enabled = false;
             drainLimitRenderer.enabled = false;

@@ -531,7 +531,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.27, y: 1.27, z: 1.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4678014997985334331}
@@ -821,17 +821,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f2ad4977cfb294ba840dc88779904f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 7
-  maxFallSpeed: 7
-  fallAcceleration: 16
+  jumpPower: 9.2
+  maxFallSpeed: 10
+  fallAcceleration: 20
   jumpEndEarlyGravityModifier: 5
   coyoteTime: 0.15
   jumpBuffer: 0.2
   groundingForce: 0
-  maxSpeed: 2.85
+  maxSpeed: 3.2
   acceleration: 5
-  groundDeceleration: 15
-  airDeceleration: 30
+  groundDeceleration: 14
+  airDeceleration: 35
   grounderDistance: 0.05
   groundLayer:
     serializedVersion: 2
@@ -1432,17 +1432,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5390d7cfcb8f3d044b3df9a6ca3bedd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 0.1
+  minDistance: 0.05
   lineThickness: 0.08
   drawableObject: {fileID: 6073344116846575433, guid: e5bb4afeff0b19f4aba08e484fd546d0, type: 3}
-  maxInk: 20
+  maxInk: 100
   maxDistanceToDrain: 1.27
   drainLayer:
     serializedVersion: 2
     m_Bits: 128
   penRenderer: {fileID: 632012968511105667}
   drainLimitRenderer: {fileID: 2035349048308039640}
-  distancePerInk: 1
+  distancePerInk: 0.04
 --- !u!1 &6879952826745875541
 GameObject:
   m_ObjectHideFlags: 0
