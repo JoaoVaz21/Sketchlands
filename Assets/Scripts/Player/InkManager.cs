@@ -19,6 +19,7 @@ namespace Player
         [SerializeField] private SpriteRenderer penRenderer;
         [SerializeField] private SpriteRenderer drainLimitRenderer;
         [SerializeField] private float distancePerInk =2;
+        [SerializeField] private float timeToRestoreInkPoint = 0.01f;
         private Mesh _mesh;
         private DrawableObject _currentDrawing;
         private Vector3 _lastMousePosition;
@@ -60,7 +61,7 @@ namespace Player
                 {
                     CurrentInk++;
                 }
-                yield return new WaitForSeconds(0.02f);
+                yield return new WaitForSeconds(timeToRestoreInkPoint);
 
 
             }
@@ -71,11 +72,12 @@ namespace Player
 
         private void OnDrawingCollision()
         {
+            /*
             _drawing = false;
             //TODO animate drawing failed
             _currentDrawing.CollidedWhileCreating-=OnDrawingCollision;
             _currentDrawing.CompleteMesh();
-
+            */
 
 
         }

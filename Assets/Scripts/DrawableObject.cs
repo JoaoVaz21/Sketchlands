@@ -128,7 +128,7 @@ public class DrawableObject : MonoBehaviour
         _mesh.RecalculateNormals();
         var mass = GetDrawnVerticesCount() * massPerVertice;
         _rb.mass = mass>maxMass?maxMass:mass;
-        _rb.bodyType =RigidbodyType2D.Dynamic;
+        _rb.bodyType =RigidbodyType2D.Kinematic;
         if (_rb.mass > maxMassToBecomeUnpushable)
         {
             _rb.constraints = RigidbodyConstraints2D.FreezePositionX;

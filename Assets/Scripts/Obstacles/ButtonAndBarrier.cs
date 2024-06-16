@@ -20,7 +20,7 @@ namespace Obstacles
         private void Update()
         {
 
-                barrier.transform.localPosition = Vector3.Lerp (barrier.transform.localPosition, _isPressed?targetPosition:_startPosition, velocity);
+                barrier.transform.localPosition = Vector3.Lerp (barrier.transform.localPosition, _isPressed?targetPosition:_startPosition, velocity*Time.deltaTime);
             
 
         }
