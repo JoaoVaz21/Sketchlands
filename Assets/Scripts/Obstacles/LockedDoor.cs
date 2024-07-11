@@ -5,16 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils;
 
-public class Goal : MonoBehaviour
+public class LockedDoor : MonoBehaviour
 {
     [SerializeField] private ColliderNotifier goalLock;
 
     [SerializeField] private ColliderNotifier key;
-    [SerializeField] private int nextScene;
 
     private bool _hasReachedLock = false;
     // Start is called before the first frame update
-    
+
     void Start()
     {
         key.TriggerStarted += OnKeyCollision;
@@ -28,22 +27,16 @@ public class Goal : MonoBehaviour
             _hasReachedLock = true;
             Destroy(key.gameObject);
             //In the future this should be replaced by an animation
-            goalLock.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            Destroy(goalLock.gameObject);
         }
     }
     private void OnLockCollision(GameObject otherCollider)
     {
-        if (otherCollider.CompareTag("Player") && _hasReachedLock)
-        {
-           //TODO LevelComplete
-           Debug.Log("Level completed");
-            SceneManager.LoadScene(nextScene);
-
-        }
+        
     }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

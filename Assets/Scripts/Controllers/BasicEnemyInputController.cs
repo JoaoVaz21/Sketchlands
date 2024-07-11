@@ -1,25 +1,30 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Enemies;
+using UnityEngine;
 
 public class BasicEnemyInputController : MonoBehaviour,IInputController
 {
-    [SerializeField] private bool startRight;
-    [SerializeField] private float timeInSameDirection;
+    [SerializeField] private Vector3 endPosition;
+    [SerializeField] private WallCheck wallCheck;
+    [SerializeField] private float distanceThreshold = 0.1f;
     private float _direction;
-    private float _currentTime;
+    private Vector3 _startPosition;
 
     private void Awake()
     {
-        _direction = startRight ? 1 : -1;
-        _currentTime = 0;
+        _startPosition = transform.localPosition;
+        _direction = (endPosition - _startPosition).x > 0 ? 1 : -1;
+        wallCheck.CollidedWithGround += OnWallCollided;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        _currentTime += Time.deltaTime;
-        if (_currentTime > timeInSameDirection)
+        var distance = Mathf.Abs((endPosition.x - transform.localPosition.x));
+        if (distance <= distanceThreshold)
         {
             _direction = -_direction;
-            _currentTime = 0;
+            var aux = _startPosition;
+            _startPosition = endPosition;
+            endPosition = aux;
         }
     }
 
@@ -36,5 +41,17 @@ public class BasicEnemyInputController : MonoBehaviour,IInputController
     public float RetrieveMoveInput()
     {
         return _direction;
+    }
+    private void OnWallCollided()
+    {
+        _direction = -_direction;
+        var aux = _startPosition;
+        _startPosition = endPosition;
+        endPosition = aux;
+    }
+
+    private void OnDestroy()
+    {
+        wallCheck.CollidedWithGround -= OnWallCollided;
     }
 }
