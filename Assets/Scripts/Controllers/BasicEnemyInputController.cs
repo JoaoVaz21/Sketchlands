@@ -13,7 +13,7 @@ public class BasicEnemyInputController : MonoBehaviour,IInputController
     {
         _startPosition = transform.localPosition;
         _direction = (endPosition - _startPosition).x > 0 ? 1 : -1;
-        wallCheck.CollidedWithGround += OnWallCollided;
+        wallCheck.CollidedWithWall += OnWallCollided;
     }
 
     private void FixedUpdate()
@@ -52,6 +52,6 @@ public class BasicEnemyInputController : MonoBehaviour,IInputController
 
     private void OnDestroy()
     {
-        wallCheck.CollidedWithGround -= OnWallCollided;
+        wallCheck.CollidedWithWall -= OnWallCollided;
     }
 }

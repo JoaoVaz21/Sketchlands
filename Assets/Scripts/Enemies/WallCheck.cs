@@ -6,16 +6,15 @@ namespace Assets.Scripts.Enemies
     public class WallCheck : MonoBehaviour
     {
         [SerializeField] private LayerMask collisionLayer;
-        public Action CollidedWithGround;
-        
+        public Action CollidedWithWall;
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if ((collision.gameObject.layer & (1 << collisionLayer)) != 0)
+            if (((1 << collision.gameObject.layer) & collisionLayer) != 0)
             {
-                CollidedWithGround?.Invoke();
+                CollidedWithWall?.Invoke();
             }
-
         }
+    
     }
 }
