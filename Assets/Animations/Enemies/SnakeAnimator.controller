@@ -137,7 +137,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy2Animator
+  m_Name: SnakeAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: velocityX
@@ -268,7 +268,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ade8580327c1f444485bfef967c3595d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 35e5cea62d9eb9347aa98d460a637c49, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

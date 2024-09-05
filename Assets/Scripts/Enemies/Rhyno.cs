@@ -2,6 +2,7 @@ using Assets.Scripts.Enemies;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -18,18 +19,20 @@ public class Rhyno : MonoBehaviour
     [SerializeField] float velocity = 5;
     [SerializeField] float distanceToCheck = 10;
     [SerializeField] private WallCheck wallCheck;
-    [SerializeField] private LayerMask layerToHit;
+    [SerializeField] private LayerMask ignoreLayerMask;
     private Animator _animator;
     private Rigidbody2D _rb;
     private RhynoState _state;
     private float _currentCharge;
     private float _direction = 0;
+    private Vector3 _startScale;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _state = RhynoState.Stopped;
         wallCheck.CollidedWithWall += OnCollidedWithWall;
+        _startScale = this.transform.localScale;
 
     }
 
@@ -38,29 +41,33 @@ public class Rhyno : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var hit = Physics2D.Raycast(this.transform.position - new Vector3(distanceToCheck/2,0,0), Vector2.right, distanceToCheck,layerToHit);
-        Debug.DrawLine(this.transform.position - new Vector3(distanceToCheck / 2, 0, 0), this.transform.position + new Vector3(distanceToCheck / 2, 0, 0), Color.red,2,false);
+        Debug.DrawLine(this.transform.position - new Vector3(distanceToCheck / 2, 0, 0), this.transform.position + new Vector3(distanceToCheck / 2, 0, 0), Color.red, 2, false);
 
-        if (hit && hit.collider.gameObject.CompareTag("Player"))
+        var hitsLeft = Physics2D.RaycastAll(this.transform.position, Vector2.left, distanceToCheck/2);
+        var filteredHitsLeft = hitsLeft.Where(hit => ((1 << hit.collider.gameObject.layer) & ignoreLayerMask) == 0).ToArray();
+
+        var hitsRight = Physics2D.RaycastAll(this.transform.position, Vector2.right, distanceToCheck / 2);
+        var filteredHitsRight= hitsRight.Where(hit => ((1 << hit.collider.gameObject.layer) & ignoreLayerMask) == 0).ToArray();
+
+        if ((filteredHitsLeft.Count() >0 && filteredHitsLeft[0].collider.gameObject.CompareTag("Player")) || (filteredHitsRight.Count() > 0 && filteredHitsRight[0].collider.gameObject.CompareTag("Player")))
         {
-            Vector3 scale = transform.localScale;
+            var hit =(filteredHitsLeft.Count() > 0 && filteredHitsLeft[0].collider.gameObject.CompareTag("Player")) ? filteredHitsLeft[0] : filteredHitsRight[0];
+            Vector3 scale = _startScale;
             if (_state != RhynoState.Running)
             {
                 if (hit.collider.transform.position.x < transform.position.x)
                 {
                     // Player is to the left; face left
-                    scale.x = -Mathf.Abs(scale.x);
+                    scale.x = -scale.x;
                     _direction = -1;
                 }
                 else
                 {
-                    // Player is to the right; face right
-                    scale.x = Mathf.Abs(scale.x);
                     _direction = 1;
                 }
+                transform.localScale = scale;
             }
-            transform.localScale = scale;
- 
+
             switch (_state)
             {
                 case RhynoState.Stopped:
@@ -110,11 +117,11 @@ public class Rhyno : MonoBehaviour
     {
         if (_state == RhynoState.Running)
         {
-            this._animator.SetBool("Destroy", true);
+            _animator.SetBool("Charging", false);
+            this._animator.SetBool("Running", false);
             _rb.velocity = Vector2.zero;
 
-            //TODO this should be after the animation
-            Destroy(this.gameObject); 
+            _state = RhynoState.Stopped;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)

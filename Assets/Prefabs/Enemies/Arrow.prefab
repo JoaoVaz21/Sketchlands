@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8818718882046358928}
   - component: {fileID: 2092469250477909580}
   - component: {fileID: 266332202877476329}
+  - component: {fileID: 7896833011954645377}
   m_Layer: 8
   m_Name: Arrow
   m_TagString: Enemy
@@ -172,3 +173,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 2092469250477909580}
+--- !u!95 &7896833011954645377
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741469848188095512}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 22ce59cf4e2321f4fafc9c7a8ccf643c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

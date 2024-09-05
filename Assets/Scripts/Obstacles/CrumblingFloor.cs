@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrumblingFloot : MonoBehaviour
 {
     [SerializeField] private float timeToCrumble = 2f;
+    [SerializeField] private Animator animator;
     private bool _startedCrumbling = false;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,6 @@ public class CrumblingFloot : MonoBehaviour
     }
     private IEnumerator Crumble()
     {
-        //TODO animate shake
         yield return new WaitForSeconds(timeToCrumble);
         Destroy(gameObject);
     }
@@ -28,6 +28,7 @@ public class CrumblingFloot : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && !_startedCrumbling)
         {
             _startedCrumbling=true;
+            this.animator.SetBool("Shaking", _startedCrumbling);
             StartCoroutine(Crumble());
         }
 
@@ -38,6 +39,7 @@ public class CrumblingFloot : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && _startedCrumbling)
         {
             _startedCrumbling = false;
+            this.animator.SetBool("Shaking", _startedCrumbling);
             StopAllCoroutines();
         }
     }
