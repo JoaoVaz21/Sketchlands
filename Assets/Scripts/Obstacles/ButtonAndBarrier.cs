@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -10,7 +11,7 @@ namespace Obstacles
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float velocity = 0.005f;
         private Vector3 _startPosition;
-
+        private List<Collider2D> _objectcolliding = new List<Collider2D>();
         private bool _isPressed = false;
         private void Awake()
         {
@@ -27,12 +28,17 @@ namespace Obstacles
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            _objectcolliding.Add(other);
             _isPressed = true;
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            _isPressed = false;
+            _objectcolliding.Remove(other);
+            if (_objectcolliding.Count == 0)
+            {
+                _isPressed = false;
+            }
         }
     }
 }
