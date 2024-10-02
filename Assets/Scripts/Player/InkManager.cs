@@ -86,7 +86,6 @@ namespace Player
         {
             if (callbackContext.started)
             {
-                Debug.Log("draw started");
                 if (CurrentInk > 0)
                 {
                     _currentDrawing = Instantiate(drawableObject, Vector3.zero, Quaternion.identity)
@@ -179,7 +178,6 @@ namespace Player
         }
         else if (callbackContext.canceled)
         {
-            Debug.Log("position to ink from: " + transform.position);
             if (_currentDrainingHit.collider != null)
             {
                 Destroy(_currentDrainingHit.collider.gameObject);

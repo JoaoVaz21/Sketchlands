@@ -123,7 +123,6 @@ public class DrawableObject : MonoBehaviour
         
         _polygonCollider.points = MathHelper.Vector3ToVector2(upVertices.ToArray());
         var renderer = GetComponent<MeshRenderer>();
-        Debug.Log("material name is:" + renderer.material.name);
         _mesh.RecalculateBounds();
         _mesh.RecalculateNormals();
         var mass = GetDrawnVerticesCount() * massPerVertice;
@@ -197,6 +196,5 @@ public class DrawableObject : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Drawable object on collision enter");
     }
 }

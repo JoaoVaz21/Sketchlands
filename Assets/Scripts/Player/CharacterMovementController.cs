@@ -39,6 +39,7 @@ using UnityEngine.Serialization;
         private CapsuleCollider2D _col;
         private bool _cachedQueryStartInColliders;
         private Animator _animator;
+    private bool _cantMove = false;
         private float _xScale;
         private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + jumpBuffer;
         private bool CanUseCoyote => _coyoteUsable && !_onGround && _time < _frameLeftGrounded + coyoteTime;
@@ -68,12 +69,21 @@ using UnityEngine.Serialization;
         }
         private void FixedUpdate()
         {
+        if (_cantMove)
+        {
+            _animator.SetFloat("velocityX", Math.Abs(_direction.x));
+            _velocity.x = 0;
+            _rb.velocity = _velocity;
+        }
+        else
+        {
             _velocity = _rb.velocity;
             CheckCollisions();
             HandleJump();
             HandleDirection();
             HandleGravity();
             _rb.velocity = _velocity;
+        }
     }
 
     private void CheckCollisions()
@@ -159,5 +169,9 @@ using UnityEngine.Serialization;
             _animator.SetFloat("velocityX",Math.Abs(_direction.x));
 
         }
+    public void SetCantMove(bool cantMove)
+    {
+        this._cantMove = cantMove;
+    }
 
     }

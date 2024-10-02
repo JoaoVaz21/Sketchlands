@@ -10,6 +10,8 @@ namespace Obstacles
         [SerializeField] private GameObject barrier;
         [SerializeField] private Vector3 targetPosition;
         [SerializeField] private float velocity = 0.005f;
+        [SerializeField] private Color offColor;
+        [SerializeField] private Color onColor;
         private Vector3 _startPosition;
         private List<Collider2D> _objectcolliding = new List<Collider2D>();
         private bool _isPressed = false;
@@ -28,16 +30,21 @@ namespace Obstacles
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.gameObject.CompareTag("Player")) return;
             _objectcolliding.Add(other);
             _isPressed = true;
+            GetComponent<SpriteRenderer>().color = onColor;
         }
 
+   
         private void OnTriggerExit2D(Collider2D other)
         {
+            if (other.gameObject.CompareTag("Player")) return;
             _objectcolliding.Remove(other);
             if (_objectcolliding.Count == 0)
             {
                 _isPressed = false;
+                GetComponent<SpriteRenderer>().color = offColor;
             }
         }
     }

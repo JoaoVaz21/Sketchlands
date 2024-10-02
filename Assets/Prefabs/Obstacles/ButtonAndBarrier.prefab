@@ -179,6 +179,8 @@ MonoBehaviour:
   barrier: {fileID: 7879147862841702841}
   targetPosition: {x: 0, y: 0, z: 0}
   velocity: 0.1
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  onColor: {r: 0.00663054, g: 1, b: 0, a: 1}
 --- !u!1 &7879147862841702841
 GameObject:
   m_ObjectHideFlags: 0

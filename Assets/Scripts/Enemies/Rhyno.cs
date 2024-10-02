@@ -71,7 +71,6 @@ public class Rhyno : MonoBehaviour
             switch (_state)
             {
                 case RhynoState.Stopped:
-                    Debug.Log("Changing state to charging");
                     _state = RhynoState.Charging;
                     _animator.SetBool("Charging", true);
                     _currentCharge = 0;
@@ -82,7 +81,6 @@ public class Rhyno : MonoBehaviour
                     {
                         _state = RhynoState.Running;
                         _animator.SetBool("Running", true);
-                        Debug.Log("Changing state to running");
 
                     }
                     break;
@@ -95,7 +93,6 @@ public class Rhyno : MonoBehaviour
             {
                 _state = RhynoState.Stopped;
                 _animator.SetBool("Charging", false);
-                Debug.Log("Changing state to stop");
 
             }
         }
@@ -106,7 +103,6 @@ public class Rhyno : MonoBehaviour
         if(_state == RhynoState.Running)
         {
             _rb.velocity = new Vector2(velocity * _direction, _rb.velocity.y);
-            Debug.Log("rhybi velocity = " + velocity * _direction);
         }
         else
         {

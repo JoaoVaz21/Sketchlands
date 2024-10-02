@@ -11,6 +11,8 @@ public class Goal : MonoBehaviour
 
     [SerializeField] private ColliderNotifier key;
     [SerializeField] private int nextScene;
+    [SerializeField] private Animator lockAnimationController;
+    [SerializeField] private string textOnKeyAdquired;
 
     private bool _hasReachedLock = false;
     // Start is called before the first frame update
@@ -27,16 +29,25 @@ public class Goal : MonoBehaviour
         {
             _hasReachedLock = true;
             Destroy(key.gameObject);
-            //In the future this should be replaced by an animation
-            goalLock.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            lockAnimationController.SetTrigger("Open");
+            DialogManager.Instance.ActivateDialogBox(textOnKeyAdquired);
+            StartCoroutine(DeactivateDialogBoxWithDelay());
+       
         }
     }
+    private IEnumerator DeactivateDialogBoxWithDelay()
+    {
+
+        yield return new WaitForSeconds(2);
+
+        DialogManager.Instance.DeactivateDialogBox();
+    }
+
     private void OnLockCollision(GameObject otherCollider)
     {
         if (otherCollider.CompareTag("Player") && _hasReachedLock)
         {
-           //TODO LevelComplete
-           Debug.Log("Level completed");
+            UiManager.Instance.Fade(1);
             SceneManager.LoadScene(nextScene);
 
         }

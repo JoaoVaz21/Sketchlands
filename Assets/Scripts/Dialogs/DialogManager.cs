@@ -13,7 +13,10 @@ public class DialogManager : MonoBehaviour
         {
             Instance = this;
         }
-        Destroy(this);
+        else
+        {
+            Destroy(this);
+        }
     }
 
     private void Start()
