@@ -13,6 +13,7 @@ public class Goal : MonoBehaviour
     [SerializeField] private int nextScene;
     [SerializeField] private Animator lockAnimationController;
     [SerializeField] private string textOnKeyAdquired;
+    [SerializeField] private AudioSource doorAudioSource;
 
     private bool _hasReachedLock = false;
     // Start is called before the first frame update
@@ -28,6 +29,7 @@ public class Goal : MonoBehaviour
         if (otherCollider.CompareTag("Player") && !_hasReachedLock)
         {
             _hasReachedLock = true;
+            doorAudioSource.Play();
             Destroy(key.gameObject);
             lockAnimationController.SetTrigger("Open");
             DialogManager.Instance.ActivateDialogBox(textOnKeyAdquired);

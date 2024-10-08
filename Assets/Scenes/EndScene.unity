@@ -317,7 +317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The End.... for now!
+  m_text: The End... for now!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -555,8 +555,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Thanks for playing! This was just a small prototype of and idea I had and
-    decided to try to do it as solo dev, so everything you see was done by my clumsy
-    hands. I hope you enjoying it and do provide feedback if you have.
+    decided to try to do it as solo dev, so almost everything you see was done by
+    my clumsy hands. The sounds and music were integrated by me, but they belong
+    to different free or humble bundle packages. Hope you enjoyed it and do provide
+    feedback if you have.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

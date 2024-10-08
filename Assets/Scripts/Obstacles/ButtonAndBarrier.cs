@@ -12,6 +12,7 @@ namespace Obstacles
         [SerializeField] private float velocity = 0.005f;
         [SerializeField] private Color offColor;
         [SerializeField] private Color onColor;
+        [SerializeField] private AudioSource buttonAudioSource;
         private Vector3 _startPosition;
         private List<Collider2D> _objectcolliding = new List<Collider2D>();
         private bool _isPressed = false;
@@ -31,6 +32,10 @@ namespace Obstacles
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag("Player")) return;
+            if (_objectcolliding.Count == 0)
+            {
+                buttonAudioSource.Play();
+            }
             _objectcolliding.Add(other);
             _isPressed = true;
             GetComponent<SpriteRenderer>().color = onColor;

@@ -12,14 +12,15 @@ namespace Player
     {
         [SerializeField] private float minDistance = 0.05f;
         [SerializeField] private float lineThickness = 0.1f;
-        [SerializeField] private GameObject drawableObject; 
+        [SerializeField] private GameObject drawableObject;
         [SerializeField] private int maxInk = 100;
         [SerializeField] private float maxDistanceToDrain = 10f;
         [SerializeField] private LayerMask drainLayer;
         [SerializeField] private SpriteRenderer penRenderer;
         [SerializeField] private SpriteRenderer drainLimitRenderer;
-        [SerializeField] private float distancePerInk =2;
+        [SerializeField] private float distancePerInk = 2;
         [SerializeField] private float timeToRestoreInkPoint = 0.01f;
+        [SerializeField] private AudioSource drawAudioSource;
         private Mesh _mesh;
         private DrawableObject _currentDrawing;
         private Vector3 _lastMousePosition;
@@ -88,6 +89,7 @@ namespace Player
             {
                 if (CurrentInk > 0)
                 {
+                    drawAudioSource.Play();
                     _currentDrawing = Instantiate(drawableObject, Vector3.zero, Quaternion.identity)
                         .GetComponent<DrawableObject>();
                     _lastMousePosition = InputHelper.GetMousePosition();
@@ -104,6 +106,7 @@ namespace Player
             {
                 if (_drawing)
                 {
+                    drawAudioSource.Stop();
                     _drawing = false;
                     _currentDrawing.CollidedWhileCreating -= OnDrawingCollision;
                     _currentDrawing.CompleteMesh();
@@ -136,6 +139,7 @@ namespace Player
                 }
                 else
                 {
+                    drawAudioSource.Stop();
                     _drawing = false;
                     _currentDrawing.CompleteMesh();
                 }

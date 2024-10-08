@@ -19,6 +19,7 @@ using UnityEngine.Serialization;
         [SerializeField, Range(0f, 100f)] private float airDeceleration=30f;
         [SerializeField, Range(0, 0.5f)] private float grounderDistance=-0.05f;
         [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private AudioSource playerWalkSoundSource;
 
         private IInputController _controller;
         private Rigidbody2D _rb;
@@ -71,6 +72,7 @@ using UnityEngine.Serialization;
         {
         if (_cantMove)
         {
+            playerWalkSoundSource?.Stop();
             _animator.SetFloat("velocityX", Math.Abs(_direction.x));
             _velocity.x = 0;
             _rb.velocity = _velocity;
@@ -133,9 +135,10 @@ using UnityEngine.Serialization;
             _coyoteUsable = false;
             _velocity.y = jumpPower;
             _animator.SetBool("isJumping",true);
+            playerWalkSoundSource?.Stop();
 
-        }
-        private void HandleGravity()
+    }
+    private void HandleGravity()
         {
             if (!_onGround )
             {
@@ -149,7 +152,11 @@ using UnityEngine.Serialization;
         {
             if (_direction.x == 0)
             {
-                var deceleration = _onGround ? groundDeceleration : airDeceleration;
+            if (playerWalkSoundSource)
+            {
+                playerWalkSoundSource?.Stop();
+            }
+            var deceleration = _onGround ? groundDeceleration : airDeceleration;
                 _velocity.x = Mathf.MoveTowards(_velocity.x, 0, deceleration * Time.fixedDeltaTime);
             }
             else
@@ -160,6 +167,10 @@ using UnityEngine.Serialization;
                     _velocity.x = -_velocity.x;
                 }
                 _velocity.x = Mathf.MoveTowards(_velocity.x, _direction.x * maxSpeed, acceleration * Time.fixedDeltaTime);
+            if (playerWalkSoundSource != null && !playerWalkSoundSource.isPlaying && _onGround)
+            {
+                playerWalkSoundSource?.Play();
+            }
             }
             if (_direction.x != 0)
             {

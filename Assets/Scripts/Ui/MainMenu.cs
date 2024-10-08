@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] AudioClip levelClip;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnStartClicked()
     {
-        SceneManager.LoadScene(1);
+        AudioManager.Instance.ChangeMusic(1,levelClip);
+        StartCoroutine(DelayedLoadScene(0.5f));
     }
-    public void OnSoundTogled(bool sound)
+    private IEnumerator DelayedLoadScene(float delay)
     {
-        Debug.Log("Sound toggled: " + sound);
-        //TODO interact with sound manager
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(1);
+
     }
 }

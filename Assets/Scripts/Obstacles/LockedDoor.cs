@@ -10,6 +10,7 @@ public class LockedDoor : MonoBehaviour
     [SerializeField] private ColliderNotifier goalLock;
 
     [SerializeField] private ColliderNotifier key;
+    [SerializeField] private AudioSource keySoundSource;
 
     private bool _hasReachedLock = false;
     // Start is called before the first frame update
@@ -24,8 +25,9 @@ public class LockedDoor : MonoBehaviour
     {
         if (otherCollider.CompareTag("Player") && !_hasReachedLock)
         {
+            keySoundSource.Play();
             _hasReachedLock = true;
-            Destroy(key.gameObject);
+            key.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             //In the future this should be replaced by an animation
             Destroy(goalLock.gameObject);
         }

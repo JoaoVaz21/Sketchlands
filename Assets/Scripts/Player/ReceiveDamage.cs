@@ -7,12 +7,14 @@ namespace Player
 {
     public class ReceiveDamage : MonoBehaviour
     {
+        [SerializeField] AudioSource dyingAudioSource;
         private bool _dying = false;
         private void OnCollisionEnter2D(Collision2D other)
         {
 
             if (other.gameObject.CompareTag("Enemy") && !_dying)
             {
+                dyingAudioSource.Play();
                 _dying = true;
                 this.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 this.gameObject.GetComponent<CharacterMovementController>().SetCantMove(true);

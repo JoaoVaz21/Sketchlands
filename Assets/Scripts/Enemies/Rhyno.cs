@@ -20,6 +20,8 @@ public class Rhyno : MonoBehaviour
     [SerializeField] float distanceToCheck = 10;
     [SerializeField] private WallCheck wallCheck;
     [SerializeField] private LayerMask ignoreLayerMask;
+    [SerializeField] private AudioClip[] clips;
+    [SerializeField] private AudioSource audioSource;
     private Animator _animator;
     private Rigidbody2D _rb;
     private RhynoState _state;
@@ -73,6 +75,8 @@ public class Rhyno : MonoBehaviour
                 case RhynoState.Stopped:
                     _state = RhynoState.Charging;
                     _animator.SetBool("Charging", true);
+                    audioSource.clip = clips[0];
+                    audioSource.Play();
                     _currentCharge = 0;
                     break;
                 case RhynoState.Charging:
@@ -80,6 +84,8 @@ public class Rhyno : MonoBehaviour
                     if(_currentCharge >= chargingTime)
                     {
                         _state = RhynoState.Running;
+                        audioSource.clip = clips[1];
+                        audioSource.Play();
                         _animator.SetBool("Running", true);
 
                     }
@@ -92,6 +98,7 @@ public class Rhyno : MonoBehaviour
             if(_state == RhynoState.Charging)
             {
                 _state = RhynoState.Stopped;
+                audioSource.Stop();
                 _animator.SetBool("Charging", false);
 
             }
@@ -116,7 +123,7 @@ public class Rhyno : MonoBehaviour
             _animator.SetBool("Charging", false);
             this._animator.SetBool("Running", false);
             _rb.velocity = Vector2.zero;
-
+            audioSource.Stop();
             _state = RhynoState.Stopped;
         }
     }

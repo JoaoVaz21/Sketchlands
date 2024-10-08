@@ -6,6 +6,7 @@ public class CheckPoint : MonoBehaviour
 {
     private Animator _animator;
     private bool _passed = false;
+    [SerializeField] private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class CheckPoint : MonoBehaviour
             Debug.Log("Checkpoint collision - trigger animation");
 
             _passed = true;
+            audioSource.Play();
             _animator.SetTrigger("Activate");
             CheckpointManager.Instance.SetCheckout(collision.gameObject.transform.position);
         }

@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Vector2 _velocity;
     [SerializeField] private float delay;
     [SerializeField] private float time;
-
+    [SerializeField] AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     }
     private void CreateProjectile()
     {
-
+            audioSource.Play();
             var gameObject = Instantiate(_prefab,this.transform);
             gameObject.GetComponent<IVelocitySettable>().SetVelocity(_velocity);
         
